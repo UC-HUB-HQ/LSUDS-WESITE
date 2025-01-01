@@ -1,0 +1,6 @@
+blue: "#1a4866",
+customRed: "#c60e20",
+softBlue: "#5368df",
+softRed: "#fa5757",
+grayishBlue: "#9194a1",
+darkBlue: "#252b46",
