@@ -3,7 +3,7 @@ import logo from "../assets/logo.png";
 
 const NavBar = () => {
     return (
-        <nav className=" flex justify-between items-center py-3 px-[5em]">
+        <nav className=" flex justify-between items-center py-3">
             <div>
                 <img className="h-[60px] w-[130px] cursor-pointer" src={logo} alt="LSUDS LOGO" />
             </div>

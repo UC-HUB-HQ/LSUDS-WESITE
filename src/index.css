@@ -6,13 +6,17 @@
 
 
 *{
-    @apply font-body
+    @apply font-Poppins
 }
 
 .customHeroBg {
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url('./assets/demo2.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url('./assets/demo2.webp');
 }
 
 .active-link{
     @apply text-softBlue
+}
+
+.pagePadding{
+    @apply px-[5em]
 }

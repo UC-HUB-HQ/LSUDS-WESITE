@@ -12,7 +12,7 @@ export default {
       // => @media (max-width: 430px) { ... }
     },
     fontFamily:{
-      body: ["Poppins", 'serif']
+      Poppins: ["Poppins", 'serif']
     },
     extend: {
       colors: {
