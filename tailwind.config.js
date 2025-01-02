@@ -11,6 +11,9 @@ export default {
       'mobile': {'max': '430px'},
       // => @media (max-width: 430px) { ... }
     },
+    fontFamily:{
+      body: ["Poppins", 'serif']
+    },
     extend: {
       colors: {
         customRed: "#c60e20",
