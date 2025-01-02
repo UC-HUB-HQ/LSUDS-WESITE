@@ -13,9 +13,6 @@ export default {
     },
     extend: {
       colors: {
-        darkBlue: "#252b46",
-        grayishBlue: "#9194a1",
-        softRed: "#fa5757",
         customRed: "#c60e20",
         softBlue: "#5368df",
       }
