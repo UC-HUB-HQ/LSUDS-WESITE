@@ -2,16 +2,19 @@ import React from "react";
 
 const WelcomeContent = () => {
   return (
-    <section className="pagePadding tab:mt-8 mt-32 mb-8 tab:px-7 p-5">
-      <p className="text-center text-2xl">
-        Welcome to the Lasu Debate Society, Lorem ipsum dolor sit, amet
-        consectetur adipisicing elit. Illo placeat, possimus neque consequuntur
-        quibusdam iure architecto quidem, esse nam magni voluptates? Rem minima
-        quibusdam nobis aperiam. Eum maxime natus facere? Ea eos dolore ipsa
-        inventore autem non, dolorum deleniti nostrum qui facere voluptatem
-        aspernatur est error optio architecto repudiandae fuga fugit veniam id
-        voluptatum assumenda porro dignissimos. Voluptatem, provident
+    <section className="pagePadding mb-10 flex flex-col gap-4 p-5 text-xl text-gray-500 tab:mt-8 tab:px-7">
+      <p>
+        Welcome to the Lasu Debate Society, Lorem ipsum, dolor sit amet
+        consectetur adipisicing elit. Sed saepe repellendus ullam mollitia
+        doloremque nostrum, libero laboriosam laborum minus itaque! Veritatis
+        voluptatibus voluptates ullam ab beatae, iste illum voluptate facere.
         asperiores!
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+        voluptate sequi et nihil praesentium rem optio qui veniam expedita
+        doloribus, quo perferendis blanditiis quam quisquam? Fuga minima esse
+        nemo aliquid.
       </p>
     </section>
   );

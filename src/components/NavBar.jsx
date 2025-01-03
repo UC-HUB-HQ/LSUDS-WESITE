@@ -2,32 +2,45 @@ import NavLinks from "./NavLinks";
 import logo from "../assets/logo.png";
 
 const NavBar = () => {
-    return (
-        <nav className="flex justify-between items-center py-3">
-            <div>
-                <img className="h-[60px] w-[130px] cursor-pointer" src={logo} alt="LSUDS LOGO" />
-            </div>
-            <ul className="tab:hidden flex justify-between items-center gap-4 text-white font-semibold">
-                <li>
-                   <a href="">Home</a>
-                </li>
-                <li>
-                    <a href="">Events</a>
-                </li>
-                <li>
-                    <a href="">About Us</a>
-                </li>
-                <li>
-                    <a href="https://lasudebatesociety.blogspot.com/" target="_blank" rel="noopener noreferrer">
-                        Blog
-                    </a>
-                </li>
-                <li>
-                    <a href="">Contact Us</a>
-                </li>
-            </ul>
-        </nav>
-    )
-}
+  return (
+    <nav className="flex items-center justify-between py-3">
+      <div className="">
+        <img
+          className="h-[60px] w-[130px] cursor-pointer"
+          src={logo}
+          alt="LSUDS LOGO"
+        />
+      </div>
+      <ul className="flex items-center justify-between gap-4 font-semibold text-white mobile:hidden">
+        <li>
+          <a href="">Home</a>
+        </li>
+        <li>
+          <a href="">Events</a>
+        </li>
+        <li>
+          <a href="">About Us</a>
+        </li>
+        <li>
+          <a
+            href="https://lasudebatesociety.blogspot.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Blog
+          </a>
+        </li>
+        <li>
+          <a href="">Contact Us</a>
+        </li>
+      </ul>
+      <div className="hidden mobile:flex flex-col gap-1">
+        <span className="hamburger"></span>
+        <span className="hamburger"></span>
+        <span className="hamburger"></span>
+      </div>
+    </nav>
+  );
+};
 
 export default NavBar;

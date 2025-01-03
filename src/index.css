@@ -18,5 +18,9 @@
 }
 
 .pagePadding{
-    @apply px-[5em]
+    @apply px-[5em] tab:px-6
+}
+
+.hamburger{
+    @apply w-8 h-1 bg-black rounded-lg
 }
