@@ -1,7 +1,7 @@
 import NavBar from "./NavBar";
 const HeroSection = () => {
     return (
-        <section id="hero_container" className=" h-screen customHeroBg bg-cover bg-center flex flex-col pagePadding ">
+        <section id="hero_container" className="container h-screen customHeroBg bg-cover bg-center flex flex-col tab:pl-3 pagePadding ">
             <header>
                 <NavBar />
             </header>

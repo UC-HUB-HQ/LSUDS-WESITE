@@ -33,12 +33,12 @@ const Events = () => {
     }
       
     return (
-        <article className="pagePadding my-8">
+        <article className="pagePadding tab:px-7 my-8">
             <div>
                 <h4 className=" text-softBlue font-bold ">EVENTS</h4>
                 <h2 className=" text-[3em] font-semibold">Coming Up</h2>
             </div>
-            <section className="flex justify-between gap-8 mt-8">
+            <section className="flex tab:flex-col flex-row justify-between gap-8 mt-8">
                 {events.map((event) => (
                     <div key={event.id} className="">
                         <div className="mb-2">
