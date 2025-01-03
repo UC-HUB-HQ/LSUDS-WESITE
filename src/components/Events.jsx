@@ -33,7 +33,7 @@ const Events = () => {
     }
       
     return (
-        <article className="pagePadding mt-32 mb-8">
+        <article className="pagePadding my-8">
             <div>
                 <h4 className=" text-softBlue font-bold ">EVENTS</h4>
                 <h2 className=" text-[3em] font-semibold">Coming Up</h2>
