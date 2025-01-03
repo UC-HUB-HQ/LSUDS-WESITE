@@ -33,7 +33,7 @@ const Events = () => {
     }
       
     return (
-        <article className="pagePadding my-8">
+        <article className="pagePadding mt-32 mb-8">
             <div>
                 <h4 className=" text-softBlue font-bold ">EVENTS</h4>
                 <h2 className=" text-[3em] font-semibold">Coming Up</h2>
@@ -46,7 +46,7 @@ const Events = () => {
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex gap-2">
-                                <i class="bi bi-calendar-check text-softBlue"></i>
+                                <i className="bi bi-calendar-check text-softBlue"></i>
                                 <p className=" text-gray-500">{event.event_date}</p>
                             </div>
                             <h3 className=" text-2xl font-semibold">{event.event_name}</h3>
