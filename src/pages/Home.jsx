@@ -2,6 +2,7 @@ import HeroSection from "../components/HeroSection";
 import Events from "../components/Events";
 import FloatingCardSection from "../components/FloatingCardSection";
 import WelcomeContent from "../components/WelcomeContent";
+
 const Home = () => {
   return (
     <>
