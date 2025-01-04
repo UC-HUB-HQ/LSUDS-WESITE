@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
 
 const FloatingCardSection = () => {
-  const [tabFocus, setTabFocus] = useState(true);
   const currentIndex = useRef(0);
-  const intervalRef = useRef(null); // Holds the interval ID
+  const intervalRef = useRef(null); // Holds the setInterval
 
   const cardRef = useRef([]);
 
@@ -26,8 +24,6 @@ const FloatingCardSection = () => {
       title: "Established Since",
     },
   ];
-
-  console.log("render occured");
 
   const cardCarouselAnimation = () => {
     // Get the current card
@@ -66,18 +62,17 @@ const FloatingCardSection = () => {
 
   useEffect(() => {
 
-    document.querySelectorAll(".floating-cards").forEach((card, index) => {
+    cardRef.current.forEach((card, index) => {
       if (index !== currentIndex.current) {
         card.classList.add("tab:hidden");
       }
     });
+
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        setTabFocus(true);
-        startCarousel(); // Resume carousel
+        startCarousel(); 
       } else {
-        setTabFocus(false);
-        stopCarousel(); // Pause carousel
+        stopCarousel();
       }
     };
 
@@ -96,7 +91,7 @@ const FloatingCardSection = () => {
   }, []);
 
   return (
-    <section className="relative -mt-[8em] flex w-full items-start justify-center gap-8 py-8 tab:mt-10 tab:overflow-hidden">
+    <section className="relative -mt-[8em] flex w-full items-start justify-center gap-8 py-8 tab:my-6 tab:overflow-hidden tab:py-0">
       {floatingCardContent.map((content, index) => {
         return (
           <div
