@@ -19,12 +19,12 @@ export default {
         },
         slideOut: {
           "0%": { transform: "translateX(0)", opacity: "1" },
-          "100%": { transform: "translateX(-100vw)", opacity: "0" },
+          "100%": { transform: "translateX(-100%)", opacity: "0" },
         },
       },
       animation: {
-        slideIn: "slideIn 1s linear",
-        slideOut: "slideOut 1s linear",
+        slideIn: "slideIn 1s linear forwards",
+        slideOut: "slideOut 1s linear forwards",
       },
       colors: {
         customRed: "#c60e20",

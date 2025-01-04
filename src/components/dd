@@ -1,0 +1,61 @@
+
+
+  useEffect(() => {
+    // Helper to start the animation
+    const startAnimation = () => {
+      intervalId.current = setInterval(() => {
+        const currentCard = cardRef.current[currentIndex.current];
+        const nextIndex = (currentIndex.current + 1) % floatingCardContent.length;
+        const nextCard = cardRef.current[nextIndex];
+
+        // Slide out current card
+        currentCard.classList.remove("tab:animate-slideIn");
+        currentCard.classList.add("tab:animate-slideOut");
+
+        const handleAnimationEnd = () => {
+          currentCard.classList.remove("tab:animate-slideOut");
+          currentCard.classList.add("tab:hidden");
+          currentCard.removeEventListener("animationend", handleAnimationEnd);
+
+          // Slide in the next card
+          nextCard.classList.remove("tab:hidden");
+          nextCard.classList.add("tab:animate-slideIn");
+
+          // Update the current index
+          currentIndex.current = nextIndex;
+        };
+
+        currentCard.addEventListener("animationend", handleAnimationEnd);
+      }, 4000);
+    };
+
+    const stopAnimation = () => {
+      clearInterval(intervalId.current);
+    };
+
+    // Handle visibility change
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        stopAnimation();
+      } else if (document.visibilityState === "visible") {
+        startAnimation();
+      }
+    };
+
+    // Initialize the animation
+    document.querySelectorAll(".floating-cards").forEach((card, index) => {
+      if (index !== currentIndex.current) {
+        card.classList.add("tab:hidden");
+      }
+    });
+    startAnimation();
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      stopAnimation();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+

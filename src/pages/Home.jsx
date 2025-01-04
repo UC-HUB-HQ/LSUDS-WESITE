@@ -2,7 +2,7 @@ import HeroSection from "../components/HeroSection";
 import Events from "../components/Events";
 import FloatingCardSection from "../components/FloatingCardSection";
 import WelcomeContent from "../components/WelcomeContent";
-
+import ContactSection from "../components/ContactSection.JSX";
 const Home = () => {
   return (
     <>
@@ -11,6 +11,9 @@ const Home = () => {
       <WelcomeContent />
       <section id="Events">
         <Events />
+      </section>
+      <section id="Contact">
+        <ContactSection />
       </section>
     </>
   );
