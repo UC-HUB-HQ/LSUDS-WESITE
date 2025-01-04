@@ -4,7 +4,7 @@ export default {
   theme: {
     screens: {
       tab: { max: "800px" },
-      // => @media (max-width: 1030px) { ... }
+      // => @media (max-width: 800px) { ... }
       mobile: { max: "430px" },
       // => @media (max-width: 430px) { ... }
     },

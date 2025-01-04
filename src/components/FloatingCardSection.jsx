@@ -24,38 +24,40 @@ const FloatingCardSection = () => {
     },
   ];
 
-useEffect(() => {
-  document.querySelectorAll(".floating-cards").forEach((card, index) => {
-    if (index !== currentIndex.current) {
-      card.classList.add("hidden");
+  useEffect(() => {
+    if (window.innerWidth <= 800) {
+      document.querySelectorAll(".floating-cards").forEach((card, index) => {
+        if (index !== currentIndex.current) {
+          card.classList.add("hidden");
+        }
+      });
     }
-  });
 
-  const interval = setInterval(() => {
-    // Get the current card
-    const currentCard = cardRef.current[currentIndex.current];
+    const interval = setInterval(() => {
+      // Get the current card
+      const currentCard = cardRef.current[currentIndex.current];
 
-    // Add slideOut animation
-    currentCard.classList.add("animate-slideOut");
+      // Add slideOut animation
+      currentCard.classList.add("animate-slideOut");
 
-    // Listen for animation end
-    const handleAnimationEnd = () => {
-      currentCard.classList.remove("animate-slideOut");
-      currentCard.classList.add("hidden");
-      currentCard.removeEventListener("animationend", handleAnimationEnd);
+      // Listen for animation end
+      const handleAnimationEnd = () => {
+        currentCard.classList.remove("animate-slideOut");
+        currentCard.classList.add("hidden");
+        currentCard.removeEventListener("animationend", handleAnimationEnd);
 
-      // Move to the next card
-      currentIndex.current = (currentIndex.current + 1) % floatingCardContent.length;
-      const nextCard = cardRef.current[currentIndex.current];
-      nextCard.classList.remove("hidden");
-      nextCard.classList.add("animate-slideIn");
-    };
+        // Move to the next card
+        currentIndex.current = (currentIndex.current + 1) % floatingCardContent.length;
+        const nextCard = cardRef.current[currentIndex.current];
+        nextCard.classList.remove("hidden");
+        nextCard.classList.add("animate-slideIn");
+      };
 
-    currentCard.addEventListener("animationend", handleAnimationEnd);
-  }, 5000);
+      currentCard.addEventListener("animationend", handleAnimationEnd);
+    }, 5000);
 
-  return () => clearInterval(interval);
-}, []);
+    return () => clearInterval(interval);
+  }, []);
 
 
   return (
@@ -65,7 +67,7 @@ useEffect(() => {
           <div
             ref={(element) => (cardRef.current[index] = element)}
             key={index}
-            className={`floating-cards flex h-52 w-52 flex-col items-center justify-center bg-softBlue text-center text-white duration-500 tab:transform tab:transition-all animate-slideIn`}
+            className={`floating-cards flex h-52 w-52 flex-col items-center justify-center bg-softBlue text-center text-white duration-500 tab:transform tab:transition-all animate-slideIn tab:rounded-md`}
           >
             <h1 className="mx-5 px-5 text-5xl font-semibold">
               {content.number}+
