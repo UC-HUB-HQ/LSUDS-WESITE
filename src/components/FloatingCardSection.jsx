@@ -25,32 +25,30 @@ const FloatingCardSection = () => {
   ];
 
   useEffect(() => {
-    if (window.innerWidth <= 800) {
-      document.querySelectorAll(".floating-cards").forEach((card, index) => {
-        if (index !== currentIndex.current) {
-          card.classList.add("hidden");
-        }
-      });
-    }
+    document.querySelectorAll(".floating-cards").forEach((card, index) => {
+      if (index !== currentIndex.current) {
+        card.classList.add("tab:hidden");
+      }
+    });
 
     const interval = setInterval(() => {
       // Get the current card
       const currentCard = cardRef.current[currentIndex.current];
 
       // Add slideOut animation
-      currentCard.classList.add("animate-slideOut");
+      currentCard.classList.add("tab:animate-slideOut");
 
       // Listen for animation end
       const handleAnimationEnd = () => {
-        currentCard.classList.remove("animate-slideOut");
-        currentCard.classList.add("hidden");
+        currentCard.classList.remove("tab:animate-slideOut");
+        currentCard.classList.add("tab:hidden");
         currentCard.removeEventListener("animationend", handleAnimationEnd);
 
         // Move to the next card
         currentIndex.current = (currentIndex.current + 1) % floatingCardContent.length;
         const nextCard = cardRef.current[currentIndex.current];
-        nextCard.classList.remove("hidden");
-        nextCard.classList.add("animate-slideIn");
+        nextCard.classList.remove("tab:hidden");
+        nextCard.classList.add("tab:animate-slideIn");
       };
 
       currentCard.addEventListener("animationend", handleAnimationEnd);
