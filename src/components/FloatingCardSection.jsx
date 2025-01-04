@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 const FloatingCardSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const currentIndex = useRef(0);
+
+  const cardRef = useRef([]);
 
   const floatingCardContent = [
     {
@@ -22,23 +24,48 @@ const FloatingCardSection = () => {
     },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % floatingCardContent.length);
-    }, 4000); 
+useEffect(() => {
+  document.querySelectorAll(".floating-cards").forEach((card, index) => {
+    if (index !== currentIndex.current) {
+      card.classList.add("hidden");
+    }
+  });
 
-    return () => clearInterval(interval);
-  }, [floatingCardContent.length]);
+  const interval = setInterval(() => {
+    // Get the current card
+    const currentCard = cardRef.current[currentIndex.current];
+
+    // Add slideOut animation
+    currentCard.classList.add("animate-slideOut");
+
+    // Listen for animation end
+    const handleAnimationEnd = () => {
+      currentCard.classList.remove("animate-slideOut");
+      currentCard.classList.add("hidden");
+      currentCard.removeEventListener("animationend", handleAnimationEnd);
+
+      // Move to the next card
+      currentIndex.current = (currentIndex.current + 1) % floatingCardContent.length;
+      const nextCard = cardRef.current[currentIndex.current];
+      nextCard.classList.remove("hidden");
+      nextCard.classList.add("animate-slideIn");
+    };
+
+    currentCard.addEventListener("animationend", handleAnimationEnd);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
+
 
   return (
-    <section className="tab:overflow-hidden relative -mt-[8em] tab:mt-5 flex min-h-72 w-full items-start justify-center flex-wrap gap-8 py-8 ">
+    <section className="relative -mt-[8em] flex w-full items-start justify-center gap-8 py-8 tab:mt-10 tab:overflow-hidden">
       {floatingCardContent.map((content, index) => {
         return (
           <div
+            ref={(element) => (cardRef.current[index] = element)}
             key={index}
-            className={`tab:absolute inset-0 tab:h-full tab:w-full flex h-52 w-52 flex-col items-center justify-center bg-softBlue text-white text-center tab:transition-transform tab:transform ${
-              index === currentIndex ? 'tab:translate-x-0' : 'tab:translate-x-full'
-            }`}
+            className={`floating-cards flex h-52 w-52 flex-col items-center justify-center bg-softBlue text-center text-white duration-500 tab:transform tab:transition-all animate-slideIn`}
           >
             <h1 className="mx-5 px-5 text-5xl font-semibold">
               {content.number}+
