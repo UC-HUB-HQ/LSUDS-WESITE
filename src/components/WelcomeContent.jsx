@@ -2,7 +2,7 @@ import React from "react";
 
 const WelcomeContent = () => {
   return (
-    <section className="pagePadding my-20 flex flex-col gap-4 text-xl text-gray-500 tab:mt-0 mobile:text-base ">
+    <section className="pagePadding my-20 flex flex-col gap-4 text-xl text-gray-500 tab:mt-10 mobile:text-base">
       <p>
         Welcome to the Lasu Debate Society, Lorem ipsum, dolor sit amet
         consectetur adipisicing elit. Sed saepe repellendus ullam mollitia

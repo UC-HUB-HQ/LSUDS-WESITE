@@ -92,7 +92,7 @@ const FloatingCardSection = () => {
   }, []);
 
   return (
-    <section className="relative -mt-[8em] flex w-full items-start justify-center gap-8 py-8 tab:my-6 tab:overflow-hidden tab:py-0">
+    <section className="relative -mt-[7em] flex w-full items-start justify-center gap-8 py-8 tab:my-6 tab:overflow-hidden tab:py-0">
       {floatingCardContent.map((content, index) => {
         return (
           <div

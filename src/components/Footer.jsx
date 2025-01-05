@@ -21,7 +21,7 @@ const Footer = () => {
           <h2 className="font-bold text-softBlue">Valour In Speech</h2>
         </div>
       </section>
-      <section className="mt-16 text-center text-gray-500">
+      <section className="mt-16 text-center text-gray-400">
         <p>
           © 2025 LSUDS, All rights reserved. Powered by{" "}
           <a href="https://theuchub.com/">UCHUB</a>

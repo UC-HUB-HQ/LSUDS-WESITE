@@ -5,7 +5,7 @@ export default {
     screens: {
       tab: { max: "800px" },
       // => @media (max-width: 800px) { ... }
-      mobile: { max: "430px" },
+      mobile: { max: "600px" },
       // => @media (max-width: 430px) { ... }
     },
     fontFamily: {
