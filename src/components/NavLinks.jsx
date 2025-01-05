@@ -1,24 +1,29 @@
 
 import { Link } from "react-router-dom";
-const NavLinks = ({ isMobileNav }) => {
+const NavLinks = ({ isMobileNav, closeSideBar }) => {
   return (
     <>
       <ul
         className={isMobileNav ? `mobileNavLinkStyle` : `desktopNavLinksStyle`}
       >
         <li>
-          <Link className="text-softBlue" to="/">
+          <Link onClick={closeSideBar} className="text-softBlue" to="/">
             Home
           </Link>
         </li>
         <li>
-          <a href="#events">Events</a>
+          <a onClick={closeSideBar} href="#events">
+            Events
+          </a>
         </li>
         <li>
-          <a href="#about">About Us</a>
+          <a onClick={closeSideBar} href="#about">
+            About Us
+          </a>
         </li>
         <li>
           <a
+            onClick={closeSideBar}
             href="https://lasudebatesociety.blogspot.com/"
             target="_blank"
             rel="noopener noreferrer"
@@ -27,7 +32,9 @@ const NavLinks = ({ isMobileNav }) => {
           </a>
         </li>
         <li>
-          <a href="#contact">Contact Us</a>
+          <a onClick={closeSideBar} href="#contact">
+            Contact Us
+          </a>
         </li>
       </ul>
     </>

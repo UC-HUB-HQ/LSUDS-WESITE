@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   MobileSideBar,
   HeroSection,
@@ -10,10 +11,21 @@ import {
 } from "../components";
 
 const Home = () => {
+
+  const [navBarOpen, setNavBarOpen] = useState(false);
+
+  const openSideBar = () => {
+    setNavBarOpen(true);
+  };
+
+  const closeSideBar = () => {
+    setNavBarOpen(false);
+  };
+
   return (
     <>
-      <MobileSideBar />
-      <HeroSection />
+      <MobileSideBar navBarOpen={navBarOpen} closeSideBar={closeSideBar} />
+      <HeroSection OpenSideBar={openSideBar} />
       <FloatingCardSection />
       <WelcomeContent />
       <Events />

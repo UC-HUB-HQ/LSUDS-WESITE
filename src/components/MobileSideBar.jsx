@@ -1,12 +1,18 @@
 import NavLinks from "./NavLinks";
-const MobileSideBar = () => {
+const MobileSideBar = ({ navBarOpen, closeSideBar }) => {
+
   return (
-    <aside className=" p-4 fixed right-0 z-50 hidden h-full w-[100%] overflow-hidden text-nowrap bg-white mobile:block">
+    <aside
+      className={`fixed right-0 z-50 hidden h-full overflow-hidden text-nowrap bg-white transition-all duration-500 mobile:block ${navBarOpen ? `w-[100%] p-4` : `w-[0%]`}`}
+    >
       <div className="flex justify-end">
-        <i className="bi bi-x text-6xl"></i>
+        <i
+          onClick={closeSideBar}
+          className="bi bi-x cursor-pointer text-6xl"
+        ></i>
       </div>
       <div className="mt-8">
-        <NavLinks isMobileNav />
+        <NavLinks closeSideBar={closeSideBar} isMobileNav />
       </div>
     </aside>
   );
