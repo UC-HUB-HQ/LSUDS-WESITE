@@ -1,13 +1,13 @@
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
-const HeroSection = () => {
+const HeroSection = ({ OpenSideBar }) => {
   return (
     <section
       id="hero_container"
       className="customHeroBg pagePadding container flex h-[110vh] flex-col bg-cover bg-center tab:h-screen mobile:h-screen"
     >
       <header>
-        <NavBar />
+        <NavBar OpenSideBar={OpenSideBar} />
       </header>
       <section
         id="hero_content"
@@ -18,7 +18,10 @@ const HeroSection = () => {
           Where Ideas Ignite Minds
         </h1>
         <div className="mt-8">
-          <Link to="/about" className="h-full w-full rounded-md bg-softBlue px-8 py-3 font-medium text-white">
+          <Link
+            to="/about"
+            className="h-full w-full rounded-md bg-softBlue px-8 py-3 font-medium text-white"
+          >
             ABOUT US
           </Link>
         </div>

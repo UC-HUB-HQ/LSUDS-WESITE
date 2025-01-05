@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import NavLinks from "./NavLinks";
 
-const NavBar = () => {
+const NavBar = ({ OpenSideBar }) => {
   return (
     <nav className="flex items-center justify-between py-3">
       <div className="">
@@ -14,7 +14,7 @@ const NavBar = () => {
       </div>
       <NavLinks />
       {/* mobile hamburger */}
-      <div className="hidden mobile:flex flex-col gap-1">
+      <div onClick={OpenSideBar} className="hidden cursor-pointer flex-col gap-1 mobile:flex">
         <span className="hamburger"></span>
         <span className="hamburger"></span>
         <span className="hamburger"></span>
