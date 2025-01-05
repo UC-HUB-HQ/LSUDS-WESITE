@@ -3,6 +3,7 @@ import {
   HeroSection,
   FloatingCardSection,
   WelcomeContent,
+  AboutSection,
   Events,
   ContactSection,
   Footer,
@@ -16,6 +17,7 @@ const Home = () => {
       <HeroSection />
       <FloatingCardSection />
       <WelcomeContent />
+      <AboutSection />
       <Events />
       <ContactSection />
       <Footer />
