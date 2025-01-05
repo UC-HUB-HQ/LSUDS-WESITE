@@ -2,7 +2,7 @@ import logo from "../assets/logo.png";
 const Footer = () => {
   return (
     <footer className="pagePadding mt-16 bg-[#001F3F] py-16 text-white">
-      <section className="flex items-center justify-between">
+      <section className="flex items-center justify-between tab:flex-col tab:gap-8">
         <div>
           <img className="h-[70px] w-[140px]" src={logo} alt="" />
         </div>
@@ -10,11 +10,11 @@ const Footer = () => {
           <p>
             Empowering voices by bridging <br /> gaps in oratory and expression
           </p>
-          <div className="flex flex-row gap-8">
-            <i class="bi bi-instagram cursor-pointer text-xl"></i>
-            <i class="bi bi-twitter cursor-pointer text-xl"></i>
-            <i class="bi bi-linkedin cursor-pointer text-xl"></i>
-            <i class="bi bi-facebook cursor-pointer text-xl"></i>
+          <div className="flex flex-row gap-8 tab:justify-center">
+            <i className="bi bi-instagram cursor-pointer text-xl"></i>
+            <i className="bi bi-twitter cursor-pointer text-xl"></i>
+            <i className="bi bi-linkedin cursor-pointer text-xl"></i>
+            <i className="bi bi-facebook cursor-pointer text-xl"></i>
           </div>
         </div>
         <div>

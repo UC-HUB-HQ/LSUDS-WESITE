@@ -1,6 +1,6 @@
 const ContactSection = () => {
     return (
-      <article className="pagePadding my-20">
+      <article id="contact" className="pagePadding my-20">
         <h2 className="text-[3em] font-semibold text-customRed">Contact</h2>
         <section className="mt-4 flex items-center justify-between gap-8 tab:gap-2 mobile:gap-6 px-10 tab:px-0 mobile:flex-col mobile:items-start ">
           <div className="flex w-[50%] mobile:w-full flex-col gap-4">

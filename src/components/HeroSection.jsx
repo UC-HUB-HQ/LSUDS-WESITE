@@ -3,7 +3,7 @@ const HeroSection = () => {
   return (
     <section
       id="hero_container"
-      className="customHeroBg pagePadding container flex h-[110vh] flex-col bg-cover bg-center tab:h-screen mobile:h-[90vh]"
+      className="customHeroBg pagePadding container flex h-[110vh] flex-col bg-cover bg-center tab:h-screen mobile:h-screen"
     >
       <header>
         <NavBar />

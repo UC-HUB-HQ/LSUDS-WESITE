@@ -38,7 +38,7 @@ const Events = () => {
   };
 
   return (
-    <article className="pagePadding my-20 tab:px-7">
+    <article id="events" className="pagePadding my-20 tab:px-7">
       <div>
         <h4 className="font-bold text-softBlue">EVENTS</h4>
         <h2 className="text-[3em] font-semibold text-customRed">Coming Up</h2>

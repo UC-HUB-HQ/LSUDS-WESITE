@@ -9,6 +9,10 @@
     @apply font-Poppins
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 .customHeroBg {
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url('./assets/demo2.webp');
 }
