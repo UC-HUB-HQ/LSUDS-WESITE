@@ -26,5 +26,5 @@
 }
 
 .inputField{
-    @apply mx-auto h-[60px] w-[90%] rounded-lg border-2 border-gray-500 px-2 text-gray-500 outline-none
+    @apply mx-auto w-[90%] rounded-lg border-2 border-gray-500 px-2 text-gray-500 outline-none tab:w-full
 }

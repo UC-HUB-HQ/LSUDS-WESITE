@@ -4,6 +4,7 @@ import {
   WelcomeContent,
   Events,
   ContactSection,
+  Footer,
 } from "../components";
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
       <WelcomeContent />
       <Events />
       <ContactSection />
+      <Footer />
     </>
   );
 };

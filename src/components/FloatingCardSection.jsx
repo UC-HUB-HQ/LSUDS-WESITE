@@ -40,8 +40,7 @@ const FloatingCardSection = () => {
       currentCard.removeEventListener("animationend", handleAnimationEnd);
 
       // Move to the next card
-      currentIndex.current =
-        (currentIndex.current + 1) % floatingCardContent.length;
+      currentIndex.current = (currentIndex.current + 1) % floatingCardContent.length;
       const nextCard = cardRef.current[currentIndex.current];
       nextCard.classList.remove("tab:hidden");
       nextCard.classList.add("tab:animate-slideIn");
@@ -62,12 +61,14 @@ const FloatingCardSection = () => {
 
   useEffect(() => {
 
+    // hide other cards except the first card
     cardRef.current.forEach((card, index) => {
       if (index !== currentIndex.current) {
         card.classList.add("tab:hidden");
       }
     });
 
+    // check if user is currently viewing the tab if yes start the carousel else stop it
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         startCarousel(); 
@@ -97,7 +98,7 @@ const FloatingCardSection = () => {
           <div
             ref={(element) => (cardRef.current[index] = element)}
             key={index}
-            className={`floating-cards flex h-52 w-52 flex-col items-center justify-center bg-softBlue text-center text-white duration-500 tab:transform tab:rounded-md tab:transition-all`}
+            className={`floating-cards flex h-52 w-52 mobile:w-[80%] flex-col items-center justify-center bg-softBlue text-center text-white duration-500 tab:transform tab:rounded-md tab:transition-all`}
           >
             <h1 className="mx-5 px-5 text-5xl font-semibold">
               {content.number}+
