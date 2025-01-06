@@ -50,7 +50,8 @@ const Events = () => {
               <img
                 className="h-[250px]"
                 src={event.event_image}
-                alt="event image"
+                alt={`Image for ${event.event_name}`}
+                loading="lazy"
               />
             </div>
             <div className="flex flex-col gap-2">

@@ -9,6 +9,7 @@ const AboutSection = () => {
           src="https://plus.unsplash.com/premium_photo-1679547202606-4d905471107f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNwZWFraW5nJTIwdG8lMjBhbiUyMGF1ZGllbmNlfGVufDB8fDB8fHww"
           alt="image of a public speaker"
           className="w-full"
+          loading="lazy"
         />
       </div>
       <div className="flex w-1/2 flex-col justify-start px-16 tab:px-1 tab:w-full">

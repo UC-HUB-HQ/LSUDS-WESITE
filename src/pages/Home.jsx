@@ -12,8 +12,15 @@ import {
 } from "../components";
 
 const Home = () => {
-
   const [navBarOpen, setNavBarOpen] = useState(false);
+
+  const checkIfContactFormSubmitted = localStorage.getItem(
+    "contactFormSubmitted",
+  );
+  if (checkIfContactFormSubmitted && checkIfContactFormSubmitted === "true") {
+    alert("Thank you for reaching out to us. We will get back to you shortly.");
+  }
+  localStorage.setItem("contactFormSubmitted", "false");
 
   const openSideBar = () => {
     setNavBarOpen(true);
@@ -29,8 +36,8 @@ const Home = () => {
       <HeroSection OpenSideBar={openSideBar} />
       <FloatingCardSection />
       <WelcomeContent />
-      <AboutSection />
       <Events />
+      <AboutSection />
       <ContactSection />
       <Footer />
     </>
