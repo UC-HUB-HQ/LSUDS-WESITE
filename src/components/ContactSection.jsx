@@ -56,7 +56,7 @@ const ContactSection = () => {
               required
               placeholder="Email Address"
             />
-            <input type="hidden" name="_next" value="http://localhost:5173/" />
+            <input type="hidden" name="_next" value="https://lsuds-web.netlify.app/" />
             <input type="hidden" name="_captcha" value="false"></input>
             <input type="hidden" name="_template" value="basic"></input>
             <textarea
