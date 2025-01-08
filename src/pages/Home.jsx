@@ -12,23 +12,24 @@ import {
 } from "../components";
 
 const Home = () => {
+
   const [navBarOpen, setNavBarOpen] = useState(false);
 
-  const checkIfContactFormSubmitted = localStorage.getItem(
-    "contactFormSubmitted",
-  );
-  if (checkIfContactFormSubmitted && checkIfContactFormSubmitted === "true") {
+  const openSideBar = () => {
+    setNavBarOpen(!navBarOpen);
+  };
+
+  const closeSideBar = () => {
+    setNavBarOpen(!navBarOpen);
+  };
+
+  // check if this is the second reload after user has submitted details in the contact section
+  const checkIfContactFormSubmitted = localStorage.getItem("contactFormSubmitted");
+  if (checkIfContactFormSubmitted && checkIfContactFormSubmitted === "true"){
     alert("Thank you for reaching out to us. We will get back to you shortly.");
   }
   localStorage.setItem("contactFormSubmitted", "false");
 
-  const openSideBar = () => {
-    setNavBarOpen(true);
-  };
-
-  const closeSideBar = () => {
-    setNavBarOpen(false);
-  };
 
   return (
     <>

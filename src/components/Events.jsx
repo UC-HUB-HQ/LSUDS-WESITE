@@ -1,4 +1,7 @@
 const Events = () => {
+
+  const image_url =
+    "https://images.unsplash.com/photo-1484494789010-20fc1a011197?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3";
   const events = [
     {
       id: 1,
@@ -6,8 +9,7 @@ const Events = () => {
       event_date: "2025-03-15",
       event_paragraph:
         "The Annual Debate Championship is the highlight of our calendar, bringing together the best debaters from universities across the region. This year, participants will engage in thought-provoking debates on pressing global issues. It's an opportunity to challenge your critical thinking, enhance your public speaking skills, and connect with fellow debate enthusiasts. Don't miss the chance to be part of this intellectually stimulating event!",
-      event_image:
-        "https://images.unsplash.com/photo-1484494789010-20fc1a011197",
+      event_image: image_url,
     },
     {
       id: 2,
@@ -15,8 +17,7 @@ const Events = () => {
       event_date: "2025-02-10",
       event_paragraph:
         "This hands-on workshop focuses on mastering the art of persuasion, a critical skill for effective debating. Participants will learn techniques for constructing compelling arguments, countering opposing views, and captivating their audience. Join us for an enriching session led by experienced debate coaches and communication experts.",
-      event_image:
-        "https://images.unsplash.com/photo-1484494789010-20fc1a011197",
+      event_image: image_url,
     },
     {
       id: 3,
@@ -24,8 +25,7 @@ const Events = () => {
       event_date: "2025-04-20",
       event_paragraph:
         "The Intercollegiate Debate Series is back, and this year's theme is 'Climate Action Now.' Teams from various colleges will debate critical topics such as renewable energy policies, climate justice, and sustainable development. Join us for an engaging series of debates as we explore solutions to one of the most urgent challenges of our time.",
-      event_image:
-        "https://images.unsplash.com/photo-1484494789010-20fc1a011197",
+      event_image: image_url,
     },
   ];
 
@@ -48,10 +48,11 @@ const Events = () => {
           <div key={event.id} className="">
             <div className="mb-2">
               <img
-                className="h-[250px]"
+                className="h-[250px] object-cover"
                 src={event.event_image}
                 alt={`Image for ${event.event_name}`}
-                loading="lazy"
+                width="500"
+                height="250"
               />
             </div>
             <div className="flex flex-col gap-2">

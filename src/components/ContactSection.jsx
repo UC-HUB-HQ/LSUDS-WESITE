@@ -28,11 +28,13 @@ const ContactSection = () => {
             <div className="flex flex-col">
               <div className="flex gap-2">
                 <i className="bi bi-mailbox2"></i>
-                <a href="mailto:">lsudsdemo@gmail.com</a>
+                <a href="mailto:Lasu.debatesociety@gmail.com">
+                  Lasu.debatesociety@gmail.com
+                </a>
               </div>
               <div className="flex gap-2">
                 <i className="bi bi-telephone-fill"></i>
-                <a href="tel:+">07042932301</a>
+                <a href="tel:07042932301">07042932301</a>
               </div>
             </div>
           </div>

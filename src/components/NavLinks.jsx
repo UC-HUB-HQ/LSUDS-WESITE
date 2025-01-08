@@ -12,7 +12,7 @@ const NavLinks = ({ isMobileNav, closeSideBar }) => {
           </Link>
         </li>
         <li>
-          <a onClick={closeSideBar} href="#events">
+          <a onClick={closeSideBar} href="#">
             Events
           </a>
         </li>

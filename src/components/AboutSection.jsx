@@ -14,10 +14,10 @@ const AboutSection = () => {
       </div>
       <div className="flex w-1/2 flex-col justify-start px-16 tab:px-1 tab:w-full">
         <h1 className="mb-2 text-sm font-semibold text-customRed">About us</h1>
-        <h2 className="mb-6 text-3xl font-medium tab:text-2xl">
+        <h2 className="mb-6 text-3xl font-semibold tab:text-2xl">
           We are trendsetters in Public Speaking.
         </h2>
-        <p className="mb-8 text-sm text-gray-700">
+        <p className="mb-8 text-gray-500">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur
           quaerat inventore blanditiis tempora amet doloremque iste sunt non? At
           ratione dolorum, expedita nisi ad in ex commodi blanditiis id

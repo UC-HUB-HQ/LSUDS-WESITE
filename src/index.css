@@ -14,7 +14,7 @@ html{
 }
 
 .customHeroBg {
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url('./assets/hero.avif');
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url('./assets/hero.webp');
 }
 
 .active-link{

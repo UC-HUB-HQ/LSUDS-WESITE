@@ -3,7 +3,9 @@ const MobileSideBar = ({ navBarOpen, closeSideBar }) => {
 
   return (
     <aside
-      className={`fixed right-0 z-50 hidden h-full overflow-hidden text-nowrap bg-white transition-all duration-500 mobile:block ${navBarOpen ? `w-[100%] p-4` : `w-[0%]`}`}
+      className={`fixed top-0 right-0 z-50 h-full overflow-hidden text-nowrap bg-white ease-in-out transition-all duration-500 mobile:block ${
+        navBarOpen ? `w-[100%] p-4` : `hidden w-[0%]`
+      }`}
     >
       <div className="flex justify-end">
         <i
