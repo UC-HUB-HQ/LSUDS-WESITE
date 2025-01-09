@@ -27,8 +27,8 @@ const AboutSection = () => {
           nesciunt suscipit distinctio? Nam velit omnis ea est!
         </p>
         <Link to="/about">
-          <button className="h-12 w-36 rounded bg-softBlue p-4 text-xs font-semibold text-white">
-            DISCOVER MORE
+          <button className="h-12 w-36 rounded-md bg-softBlue p-4 text-xs font-semibold text-white">
+            Discover More
           </button>
         </Link>
       </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const HeroSection = ({ OpenSideBar }) => {
   return (
     <section
-      id="hero_container"
+      id="hero"
       className="customHeroBg pagePadding container flex h-[110vh] flex-col bg-cover bg-center tab:h-screen mobile:h-screen"
     >
       <header>
