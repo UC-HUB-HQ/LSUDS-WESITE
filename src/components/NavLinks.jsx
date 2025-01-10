@@ -36,6 +36,11 @@ const NavLinks = ({ isMobileNav, closeSideBar }) => {
             Contact Us
           </a>
         </li>
+        <li>
+          <Link onClick={closeSideBar} to="/admin">
+            Admin
+          </Link>
+        </li>
       </ul>
     </>
   );

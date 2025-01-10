@@ -1,4 +1,5 @@
 import logo from "../assets/logo.png";
+
 const Footer = () => {
   return (
     <footer className="pagePadding mt-16 bg-[#001F3F] py-16 text-white">
