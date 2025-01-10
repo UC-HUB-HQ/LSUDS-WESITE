@@ -40,3 +40,36 @@ html{
 .mobileNavLinkStyle{
     @apply text-2xl flex flex-col gap-8 text-center font-semibold
 }
+
+
+/* AUTH */
+.authForm{
+    @apply mt-[2em] flex flex-col gap-6 
+}
+.inputContainer{
+    @apply flex flex-col gap-3
+}
+
+.authInput{
+    @apply h-[50px] border border-gray-500 rounded-2xl pl-4
+}
+
+.authPasswordContainer{
+    @apply h-[50px] border border-gray-500 rounded-2xl flex  
+}
+
+.authPasswordInput{
+    @apply pl-4 border-none outline-none h-full w-[90%] rounded-l-2xl
+}
+
+.authLabel{
+    @apply text-black font-semibold 
+}
+
+.authSubmitInput{
+    @apply bg-softBlue text-white w-full py-3 rounded-xl mt-2 cursor-pointer flex justify-center items-center text-center
+}
+
+.authFooterContainer{
+    @apply w-full flex justify-center mt-[1.5em] items-center mobile:mt-[3em]
+}
