@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Events = () => {
 
   const image_url =
@@ -69,7 +70,7 @@ const Events = () => {
         ))}
       </section>
       <button className="mt-10 rounded-md bg-softBlue px-6 py-2 text-white">
-        See More
+        <Link to="/events">See More</Link>
       </button>
     </article>
   );
