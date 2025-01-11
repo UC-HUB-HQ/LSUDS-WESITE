@@ -1,6 +1,9 @@
-
 import { Link } from "react-router-dom";
+import { useUser } from "../context/User";
+
 const NavLinks = ({ isMobileNav, closeSideBar }) => {
+  const user = useUser();
+
   return (
     <>
       <ul
@@ -37,9 +40,15 @@ const NavLinks = ({ isMobileNav, closeSideBar }) => {
           </a>
         </li>
         <li>
-          <Link onClick={closeSideBar} to="/admin">
-            Admin
-          </Link>
+          {user.current ? (
+            <Link onClick={closeSideBar} to="/admin">
+              Admin
+            </Link>
+          ) : (
+            <Link onClick={closeSideBar} to="/signin">
+              Sign In
+            </Link>
+          )}
         </li>
       </ul>
     </>

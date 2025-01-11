@@ -28,6 +28,7 @@ const SignIn = () => {
     setFormSubmitted(true);
     try {
       await login(loginInfo.email, loginInfo.password);
+      window.location.replace("/admin");
     } catch (error) { 
       setErrorMessage(error.message);
     } finally {

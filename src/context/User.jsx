@@ -9,10 +9,12 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
 
   async function login(email, password) {
     const loggedIn = await account.createEmailPasswordSession(email, password);
     setUser(loggedIn);
+    setEmail(email);
     window.location.replace("/admin");
   }
 
@@ -35,7 +37,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ current: user, login, logout }}>
+    <UserContext.Provider value={{ current: user, email, login, logout }}>
       {children}
     </UserContext.Provider>
   );
