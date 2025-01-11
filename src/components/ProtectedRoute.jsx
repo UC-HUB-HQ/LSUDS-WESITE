@@ -2,9 +2,16 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useUser } from "../context/User";
 
 const ProtectedRoute = () => {
-  const user = useUser();
+  const { currentUser, loading  } = useUser();
 
-  return user.current ? <Outlet /> : <Navigate to="/signin" />;
+  if (loading) {
+    return (
+      <div>
+        loading...
+      </div>
+    )
+  }
+  return currentUser ? <Outlet /> : <Navigate to="/signin" />;
 };
 
 export default ProtectedRoute;

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { account } from "../appwrite/config";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -8,14 +9,15 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
+
   const [user, setUser] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   async function login(email, password) {
     const loggedIn = await account.createEmailPasswordSession(email, password);
     setUser(loggedIn);
-    setEmail(email);
-    window.location.replace("/admin");
+    navigate("/admin");
   }
 
   async function logout() {
@@ -30,14 +32,28 @@ export const UserProvider = ({ children }) => {
     } catch (err) {
       setUser(null);
     }
+    finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
     init();
   }, []);
 
+
+
+  const context = {
+    currentUser: user,
+    login,
+    logout,
+    loading,
+  };
+
+  console.log(context)
+
   return (
-    <UserContext.Provider value={{ current: user, email, login, logout }}>
+    <UserContext.Provider value={context}>
       {children}
     </UserContext.Provider>
   );

@@ -7,6 +7,8 @@ import { useUser } from "../context/User";
 
 const SignIn = () => {
   const { login } = useUser();
+  
+  const navigate = useNavigate();
   const passwordInput = useRef(null);
 
   const [loginInfo, setLoginInfo] = useState({
@@ -28,7 +30,7 @@ const SignIn = () => {
     setFormSubmitted(true);
     try {
       await login(loginInfo.email, loginInfo.password);
-      window.location.replace("/admin");
+      navigate("/admin")
     } catch (error) { 
       setErrorMessage(error.message);
     } finally {
