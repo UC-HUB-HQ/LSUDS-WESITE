@@ -50,7 +50,6 @@ export const UserProvider = ({ children }) => {
     loading,
   };
 
-  console.log(context)
 
   return (
     <UserContext.Provider value={context}>
