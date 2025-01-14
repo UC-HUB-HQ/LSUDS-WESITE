@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useUser } from "../context/User";
 
 const NavLinks = ({ isMobileNav, closeSideBar }) => {
-  const user = useUser();
+  const { currentUser } = useUser();
 
   return (
     <>
@@ -40,7 +40,7 @@ const NavLinks = ({ isMobileNav, closeSideBar }) => {
           </a>
         </li>
         <li>
-          {user.current ? (
+          {currentUser ? (
             <Link onClick={closeSideBar} to="/admin">
               Admin
             </Link>

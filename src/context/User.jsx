@@ -15,14 +15,15 @@ export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
 
   async function login(email, password) {
-    const loggedIn = await account.createEmailPasswordSession(email, password);
+    await account.createEmailPasswordSession(email, password);
+    const loggedIn = await account.get();
     setUser(loggedIn);
-    navigate("/admin");
   }
 
   async function logout() {
     await account.deleteSession("current");
     setUser(null);
+    navigate("/signin")
   }
 
   async function init() {
