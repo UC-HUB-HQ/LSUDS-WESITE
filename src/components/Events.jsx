@@ -1,34 +1,25 @@
+import { useEffect, useState, memo } from "react";
 import { Link } from "react-router-dom";
-const Events = () => {
+import { db } from "../appwrite/database";
+import { Query } from "appwrite";
 
-  const image_url =
-    "https://images.unsplash.com/photo-1484494789010-20fc1a011197?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3";
-  const events = [
-    {
-      id: 1,
-      event_name: "Annual Debate Championship 2025",
-      event_date: "2025-03-15",
-      event_paragraph:
-        "The Annual Debate Championship is the highlight of our calendar, bringing together the best debaters from universities across the region. This year, participants will engage in thought-provoking debates on pressing global issues. It's an opportunity to challenge your critical thinking, enhance your public speaking skills, and connect with fellow debate enthusiasts. Don't miss the chance to be part of this intellectually stimulating event!",
-      event_image: image_url,
-    },
-    {
-      id: 2,
-      event_name: "Workshop: Mastering the Art of Persuasion",
-      event_date: "2025-02-10",
-      event_paragraph:
-        "This hands-on workshop focuses on mastering the art of persuasion, a critical skill for effective debating. Participants will learn techniques for constructing compelling arguments, countering opposing views, and captivating their audience. Join us for an enriching session led by experienced debate coaches and communication experts.",
-      event_image: image_url,
-    },
-    {
-      id: 3,
-      event_name: "Intercollegiate Debate Series: Climate Action Now",
-      event_date: "2025-04-20",
-      event_paragraph:
-        "The Intercollegiate Debate Series is back, and this year's theme is 'Climate Action Now.' Teams from various colleges will debate critical topics such as renewable energy policies, climate justice, and sustainable development. Join us for an engaging series of debates as we explore solutions to one of the most urgent challenges of our time.",
-      event_image: image_url,
-    },
-  ];
+const Events = memo(() => {
+  const [events, setEvents] = useState(null);
+
+  const getLatestEvents = async () => {
+    const eventResponse = await db.events.list([
+      Query.limit(3),
+      Query.orderDesc("$createdAt"),
+    ]);
+    setEvents(eventResponse.documents);
+  };
+
+  useEffect(() => {
+    getLatestEvents();
+    console.log("child useeffect ran");
+  }, []);
+
+  console.log("child component rerendered");
 
   const textReducer = (text) => {
     const text_list = text.split(" ");
@@ -45,13 +36,13 @@ const Events = () => {
         <h2 className="text-[3em] font-semibold text-customRed">Coming Up</h2>
       </div>
       <section className="mt-8 flex flex-row justify-between gap-8 tab:flex-col">
-        {events.map((event) => (
-          <div key={event.id} className="">
+        {events?.map((event) => (
+          <div key={event.$id} className="">
             <div className="mb-2">
               <img
                 className="h-[250px] object-cover"
-                src={event.event_image}
-                alt={`Image for ${event.event_name}`}
+                src={event.image}
+                alt={`Image for ${event.title}`}
                 width="500"
                 height="250"
               />
@@ -59,11 +50,11 @@ const Events = () => {
             <div className="flex flex-col gap-2">
               <div className="flex gap-2">
                 <i className="bi bi-calendar-check text-softBlue"></i>
-                <p className="text-gray-500">{event.event_date}</p>
+                <p className="text-gray-500">{event.date.split("T")[0]}</p>
               </div>
-              <h3 className="text-2xl font-semibold">{event.event_name}</h3>
+              <h3 className="text-2xl font-semibold">{event.title}</h3>
               <p className="font-medium text-gray-500">
-                {textReducer(event.event_paragraph)}
+                {textReducer(event.description)}
               </p>
             </div>
           </div>
@@ -74,6 +65,6 @@ const Events = () => {
       </button>
     </article>
   );
-};
+});
 
 export default Events;
