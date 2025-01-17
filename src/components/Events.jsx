@@ -2,6 +2,7 @@ import { useEffect, useState, memo } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../appwrite/database";
 import { Query } from "appwrite";
+import { textReducer } from "./textReducer";
 
 const Events = memo(() => {
   const [events, setEvents] = useState(null);
@@ -16,18 +17,7 @@ const Events = memo(() => {
 
   useEffect(() => {
     getLatestEvents();
-    console.log("child useeffect ran");
   }, []);
-
-  console.log("child component rerendered");
-
-  const textReducer = (text) => {
-    const text_list = text.split(" ");
-    if (text_list.length > 11) {
-      return text_list.splice(0, 11).join(" ") + "...";
-    }
-    return text;
-  };
 
   return (
     <article id="events" className="pagePadding my-20 tab:px-7">
@@ -54,7 +44,7 @@ const Events = memo(() => {
               </div>
               <h3 className="text-2xl font-semibold">{event.title}</h3>
               <p className="font-medium text-gray-500">
-                {textReducer(event.description)}
+                {textReducer(event.description, 11)}
               </p>
             </div>
           </div>
