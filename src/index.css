@@ -78,3 +78,17 @@ html{
 .tableItem{
     @apply py-3 px-4 border-b
 }
+
+/* EVENT FORM */
+
+.eventsLabel{
+    @apply mb-2 block text-sm font-bold text-gray-700
+}
+
+.eventInput{
+    @apply w-full appearance-none rounded border pl-3 leading-tight h-[60px] text-gray-700 shadow focus:outline-none
+}
+
+.eventTextarea{
+    @apply  w-full appearance-none rounded border px-3 py-2  h-[120px] leading-tight text-gray-700 shadow focus:outline-none
+}
