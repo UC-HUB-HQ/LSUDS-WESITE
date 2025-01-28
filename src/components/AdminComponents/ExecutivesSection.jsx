@@ -112,12 +112,23 @@ const ExecutivesSection = () => {
     e.preventDefault();
     //
     setLoading(true);
-
-
+    // 
     try {
+      let newImageResult;
+
+      if (e.target.image.files[0]) {
+        // ADD NEW FILE
+        newImageResult = await addImage(e.target.image.files[0]);
+        // DELETE PREV IMAGE
+        await deleteImageFile(
+          executives.find((exco) => exco.$id === idOfExecutiveToUpdate.current).image,
+        );
+      }
+      // 
       const body = {
         name: executiveForm.executiveName,
         title: executiveForm.executivePosition,
+        ...(newImageResult && { image: newImageResult.$id }),
       };
       const executiveId = idOfExecutiveToUpdate.current;
       const updateExecutiveInfo = await db.executives.update(executiveId, body);
@@ -240,7 +251,9 @@ const ExecutivesSection = () => {
         </table>
       </section>
       <form
-        onSubmit={!isUpdateExecutives ? addExecutive : updateExecutives}
+        onSubmit={
+          !isUpdateExecutives ? addExecutive : (e) => updateExecutives(e)
+        }
         className={`mx-auto flex w-[50%] flex-col gap-8 rounded bg-white px-8 py-12 shadow-md ${!isExecutiveFormOpen ? "hidden" : ""} tab:w-[80%] mobile:w-[95%]`}
       >
         {errorMessage && (
