@@ -21,10 +21,10 @@ const EventSection = () => {
     eventDate: "",
     eventDescription: "",
     eventId: "",
-    eventImageId: ""
   })
 
   const timeoutIdRef = useRef(null)
+  const idOfEventToUpdate = useRef(null);
 
   const handleEventFormChange = (e) => {
     const { name, value } = e.target;
@@ -52,8 +52,7 @@ const EventSection = () => {
       eventTitle: "",
       eventDate: "",
       eventDescription: "",
-      eventId: "",
-      eventImageId: "",
+      // eventId: "",
     });
     setFileName(null);
   }
@@ -82,7 +81,9 @@ const EventSection = () => {
         // ADD NEW FILE
         newImageResult = await addImage(e.target.image.files[0]);
         // DELETE PREV IMAGE
-        await deleteImageFile(eventForm.eventImageId);
+        await deleteImageFile(
+          events.find((event) => event.$id === idOfEventToUpdate.current).image
+        );
       }
 
       const body = {
@@ -93,18 +94,20 @@ const EventSection = () => {
         ...(newImageResult && { image: newImageResult.$id }),
       };
       const updatedEventResponse = await db.events.update(
-        eventForm.eventId,
+        idOfEventToUpdate.current,
         body,
       );
+      const currentEventToUpdateId = idOfEventToUpdate.current;
       setEvents((prevEvents) => {
         const updatedPrevEvents = prevEvents.filter(
-          (event) => event.$id !== eventForm.eventId,
+          (event) => event.$id !== currentEventToUpdateId,
         );
         return [updatedEventResponse, ...updatedPrevEvents];
       });
       setIsEventFormOpen(false);
       // RESET FORM DATA
       resetFormInfo();
+      idOfEventToUpdate.current = null;
     }
     catch (err) {
       if (err.message === "File size not allowed") {
@@ -125,13 +128,12 @@ const EventSection = () => {
   const setupEventUpdate = (e) => {
     setIsUpdateEvent(true);
     const event = events.find((event) => event.$id === e.target.dataset.id);
+    idOfEventToUpdate.current = e.target.dataset.id;
     setIsEventFormOpen(true);
     setEventForm({
       eventTitle: event.title,
       eventDate: event.date.split("T")[0],
       eventDescription: event.description,
-      eventId: e.target.dataset.id,
-      eventImageId:event.image
     });
   };
 

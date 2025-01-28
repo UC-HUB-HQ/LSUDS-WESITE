@@ -34,7 +34,7 @@ const Admin = () => {
           </div>
         </nav>
         <section className="mt-6 rounded-lg bg-white p-6 shadow-md">
-          <ExecutivesSection />
+          <EventSection />
         </section>
       </main>
     </div>
