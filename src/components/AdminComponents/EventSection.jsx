@@ -1,145 +1,301 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { db } from "../../appwrite/database";
 import { textReducer } from "../textReducer";
 import { Query } from "appwrite";
-import { storage } from "../../appwrite/config";
-import { ID } from "appwrite";
+import { addImage } from "../reusable";
+import { deleteImageFile } from "../reusable";
 import Loader from "../Loader";
+import ErrorContainer from "../ErrorContainer";
+
 
 const EventSection = () => {
+  // EVENT COMPONENT STATES
   const [events, setEvents] = useState(null);
-
-  const [loading, setLoading] = useState(false)
-
-  const [isEventFormOpen, setIsEventFormOpen] = useState(false)
-
+  const [loading, setLoading] = useState(false);
+  const [isEventFormOpen, setIsEventFormOpen] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isUpdateEvent, setIsUpdateEvent] = useState(false)
+  const [eventForm, setEventForm] = useState({
+    eventTitle: "",
+    eventDate: "",
+    eventDescription: "",
+    eventId: "",
+    eventImageId: ""
+  })
 
+  const timeoutIdRef = useRef(null)
+
+  const handleEventFormChange = (e) => {
+    const { name, value } = e.target;
+    setEventForm({ ...eventForm, [name]: value })
+  }
+
+
+  // GET THE NAME  OF THE IMAGE ADMIN WANTS TO UPLOAD
   const handleFileChange = (event) => {
-    const file = event.target.files[0]; 
+    const file = event.target.files[0];
     if (file) {
-      setFileName(file.name); 
+      setFileName(file.name);
     }
   };
 
+
+  // GET ALL EVENTS FROM THE DATABASE AND SET THE ORDER ACCORIDING TO THE TIME THEY WERE UPDATED
   const init = async () => {
-    const eventResponse = await db.events.list([Query.orderDesc("$createdAt")]);
+    const eventResponse = await db.events.list([Query.orderDesc("$updatedAt")]);
     setEvents(eventResponse.documents);
   };
 
+  const resetFormInfo = () => {
+    setEventForm({
+      eventTitle: "",
+      eventDate: "",
+      eventDescription: "",
+      eventId: "",
+      eventImageId: "",
+    });
+    setFileName(null);
+  }
+
+  const clearErrorMsg = () => {
+    // Clear the previous timeout if any, before setting a new one
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+    }
+
+    // Set a new timeout to clear the error message after 3 seconds
+    timeoutIdRef.current = setTimeout(() => {
+      setErrorMessage(null);
+    }, 3000);
+  }
+
+
+  const updateEvent = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      let newImageResult;
+
+      if (e.target.image.files[0]) {
+        // ADD NEW FILE
+        newImageResult = await addImage(e.target.image.files[0]);
+        // DELETE PREV IMAGE
+        await deleteImageFile(eventForm.eventImageId);
+      }
+
+      const body = {
+        title: eventForm.eventTitle,
+        description: eventForm.eventDescription,
+        date: eventForm.eventDate,
+        // UPDATE THE IMAGE ID
+        ...(newImageResult && { image: newImageResult.$id }),
+      };
+      const updatedEventResponse = await db.events.update(
+        eventForm.eventId,
+        body,
+      );
+      setEvents((prevEvents) => {
+        const updatedPrevEvents = prevEvents.filter(
+          (event) => event.$id !== eventForm.eventId,
+        );
+        return [updatedEventResponse, ...updatedPrevEvents];
+      });
+      setIsEventFormOpen(false);
+      // RESET FORM DATA
+      resetFormInfo();
+    }
+    catch (err) {
+      if (err.message === "File size not allowed") {
+        setErrorMessage("File size should not exceed 2MB");
+        setFileName("");
+      } else {
+        setErrorMessage(err.message);
+      }
+      clearErrorMsg();
+    }
+    finally {
+      setLoading(false);
+    }
+  }
+
+
+  // SETUP UPDATE EVENT BY DISPLAYING EVENT FORM,  POPULATING INPUT FIELDS WITH THE RIGHT DATA.
+  const setupEventUpdate = (e) => {
+    setIsUpdateEvent(true);
+    const event = events.find((event) => event.$id === e.target.dataset.id);
+    setIsEventFormOpen(true);
+    setEventForm({
+      eventTitle: event.title,
+      eventDate: event.date.split("T")[0],
+      eventDescription: event.description,
+      eventId: e.target.dataset.id,
+      eventImageId:event.image
+    });
+  };
+
+
+  // DELETE EVENTS FROM DATABSE
   const deleteEvent = async (e) => {
+    const deletedEventImageId = events.find(event => event.$id === e.target.dataset.id).image
     await db.events.delete(e.target.dataset.id);
+    deleteImageFile(deletedEventImageId)
     setEvents((prevEvents) => {
       return prevEvents.filter((item) => item.$id !== e.target.dataset.id);
     });
   };
 
+
+  // ADD NEW EVENTS
   const addEvent = async (e) => {
     e.preventDefault();
-    setLoading(true)
-    try {
-      const eventImage = await storage.createFile(
-        import.meta.env.VITE_BUCKET_ID,
-        ID.unique(),
-        e.target.image.files[0],
-      );
 
-      const upoadedImageUrl = `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_BUCKET_ID}/files/${eventImage.$id}/view?project=${import.meta.env.VITE_PROJECT_ID}`;
+    if (!e.target.image.files[0]) {
+      setErrorMessage("Upload Event Image");
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // save the image inside of bucket first
+      const eventImage = await addImage(e.target.image.files[0]);
+      // 
       const body = {
-        title: e.target.title.value,
-        description: e.target.description.value,
-        date: e.target.date.value,
-        image: upoadedImageUrl,
+        title: eventForm.eventTitle,
+        description: eventForm.eventDescription,
+        date: eventForm.eventDate,
+        image: eventImage.$id,
       };
 
       const eventResponse = await db.events.create(body);
       setEvents((prevEvents) => [eventResponse, ...prevEvents]);
       setIsEventFormOpen(false);
+      // RESET FORM DATA
+      resetFormInfo();
 
-      // clear input fields
-      setFileName(null);
-      e.target.reset();
-    }
-    catch (err) {
-      console.log(err)
-    }
-    finally {
+
+    } catch (err) {
+      if (err.message === "File size not allowed") {
+        setErrorMessage("File size should not exceed 2MB");
+        setFileName("");
+      } else {
+        setErrorMessage(err.message);
+      }
+      clearErrorMsg()
+    } finally {
       setLoading(false);
+      window.scrollTo(0, 0);
     }
   };
 
+
+
   useEffect(() => {
+    // INIT FUNCTION TO GET ALL THE EVENTS FROM THE DB IMMEDIATELY THE COMPONENT MOUNTS
     init();
   }, []);
 
+
   return (
     <>
+      <div className="mb-4 flex justify-end">
+        {!isEventFormOpen ? (
+          <button
+            onClick={() => setIsEventFormOpen(true)}
+            className="rounded-3xl bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
+          >
+            Add new Event
+            <i className="bi bi-plus font-bold"></i>
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setIsEventFormOpen(false);
+              setIsUpdateEvent(false);
+              resetFormInfo();
+            }}
+            className="rounded-3xl bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
+            type="button"
+          >
+            <i className="bi bi-arrow-left mr-2"></i>
+            Go Back
+          </button>
+        )}
+      </div>
+
       <section
         className={`overflow-x-auto p-4 ${isEventFormOpen ? "hidden" : ""}`}
       >
-        <div className="mb-4">
-          <button
-            onClick={() => setIsEventFormOpen(true)}
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
-          >
-            <i className="bi bi-plus"></i>
-            Add new Event
-          </button>
-        </div>
-        <table className="min-w-full border border-gray-200 bg-white">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="tableItem">Event Id</th>
-              <th className="tableItem">Event Title</th>
-              <th className="tableItem">Event Description</th>
-              <th className="tableItem">Update</th>
-              <th className="tableItem">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events?.map((event, index) => (
-              <tr
-                key={event.$id}
-                className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-              >
-                <td className="tableItem">{index + 1}</td>
-                <td className="tableItem">{event.title}</td>
-                <td className="tableItem">
-                  {textReducer(event.description, 10)}
-                </td>
-                <td className="tableItem text-center">
-                  <i
-                    data-id={event.$id}
-                    className="bi bi-pen cursor-pointer text-softBlue"
-                  ></i>
-                </td>
-                <td className="tableItem text-center">
-                  <i
-                    onClick={deleteEvent}
-                    data-id={event.$id}
-                    className="bi bi-trash cursor-pointer text-red-500"
-                  ></i>
-                </td>
+        {events?.length === 0 ? (
+          <div>
+            <h2 className="text-center text-2xl">NO EVENT</h2>
+          </div>
+        ) : (
+          <table className="min-w-full border border-gray-200 bg-white tab:text-sm mobile:text-xs">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="tableItem">Event Id</th>
+                <th className="tableItem">Event Title</th>
+                <th className="tableItem">Event Description</th>
+                <th className="tableItem">Update</th>
+                <th className="tableItem">Delete</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {events?.map((event, index) => (
+                <tr
+                  key={event.$id}
+                  className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                >
+                  <td className="tableItem">{index + 1}</td>
+                  <td className="tableItem">{event.title}</td>
+                  <td className="tableItem">
+                    {textReducer(event.description, 10)}
+                  </td>
+                  <td className="tableItem text-center">
+                    <i
+                      onClick={setupEventUpdate}
+                      data-id={event.$id}
+                      className="bi bi-pen cursor-pointer text-softBlue"
+                    ></i>
+                  </td>
+                  <td className="tableItem text-center">
+                    <i
+                      onClick={deleteEvent}
+                      data-id={event.$id}
+                      className="bi bi-trash cursor-pointer text-red-500"
+                    ></i>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
+      {/* EVENT FORM SECTION*/}
       <form
-        onSubmit={addEvent}
-        className={`mx-auto flex w-[50%] flex-col gap-8 rounded bg-white px-8 py-12 shadow-md ${!isEventFormOpen ? "hidden" : ""}`}
+        onSubmit={!isUpdateEvent ? addEvent : updateEvent}
+        className={`mx-auto flex w-[50%] flex-col gap-8 rounded bg-white px-8 py-12 shadow-md ${!isEventFormOpen ? "hidden" : ""} tab:w-[80%] mobile:w-[95%]`}
       >
+        {errorMessage && (
+          <ErrorContainer errorMessage={errorMessage} clearErrorMessage={setErrorMessage} />
+        )}
         <div>
           <label className="eventsLabel" htmlFor="eventTitle">
             Event Title
           </label>
           <input
-            name="title"
+            onChange={handleEventFormChange}
+            name="eventTitle"
             className="eventInput"
             id="eventTitle"
             type="text"
             placeholder="Event Title"
             required
+            value={eventForm.eventTitle}
           />
         </div>
         <div>
@@ -147,7 +303,9 @@ const EventSection = () => {
             Event Date
           </label>
           <input
-            name="date"
+            value={eventForm.eventDate}
+            onChange={handleEventFormChange}
+            name="eventDate"
             className="eventInput"
             id="eventDate"
             type="date"
@@ -159,7 +317,9 @@ const EventSection = () => {
             Event Description
           </label>
           <textarea
-            name="description"
+            value={eventForm.eventDescription}
+            onChange={handleEventFormChange}
+            name="eventDescription"
             className="eventTextarea"
             id="eventDescription"
             placeholder="Event Description"
@@ -169,12 +329,11 @@ const EventSection = () => {
         <div className="mb-4">
           <input
             onChange={handleFileChange}
-            className=" opacity-0 h-0"
+            className="hidden"
             name="image"
             id="eventPhoto"
             accept=".jpg, .jpeg, .png"
             type="file"
-            required
           />
           <label
             className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400"
@@ -202,20 +361,21 @@ const EventSection = () => {
           </label>
         </div>
         <div className="flex items-center justify-between">
-          <button
-            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
-            type="submit"
-          >
-            {loading ? <Loader /> : "Add Event"}
-          </button>
-
-          <button
-            onClick={ () => setIsEventFormOpen(false)}
-            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
-            type="submit"
-          >
-            Go Back
-          </button>
+          {!isUpdateEvent ? (
+            <button
+              className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
+              type="submit"
+            >
+              {loading ? <Loader /> : "Add Event"}
+            </button>
+          ) : (
+            <button
+              className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
+              type="submit"
+            >
+              {loading ? <Loader /> : "Update Event"}
+            </button>
+          )}
         </div>
       </form>
     </>

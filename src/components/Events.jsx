@@ -31,7 +31,7 @@ const Events = memo(() => {
             <div className="mb-2">
               <img
                 className="h-[250px] object-cover"
-                src={event.image}
+                src={`https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_BUCKET_ID}/files/${event.image}/view?project=${import.meta.env.VITE_PROJECT_ID}`}
                 alt={`Image for ${event.title}`}
                 width="500"
                 height="250"
