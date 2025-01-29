@@ -92,3 +92,12 @@ html{
 .eventTextarea{
     @apply  w-full appearance-none rounded border px-3 py-2  h-[200px] leading-tight text-gray-700 shadow focus:outline-none
 }
+
+/* ADMIN SECTIONS */
+.activeAdminSection{
+    @apply cursor-pointer border-b-4 border-blue-500 py-2 font-semibold text-blue-500
+}
+
+.inActiveAdminSecion{
+    @apply  cursor-pointer py-2 text-gray-600 hover:text-gray-800
+}
