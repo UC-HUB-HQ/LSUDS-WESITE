@@ -76,7 +76,7 @@ html{
 
 
 .tableItem{
-    @apply py-3 px-4 border-b
+    @apply py-3 px-4 border-b text-nowrap text-left 
 }
 
 /* EVENT FORM */
@@ -90,5 +90,5 @@ html{
 }
 
 .eventTextarea{
-    @apply  w-full appearance-none rounded border px-3 py-2  h-[120px] leading-tight text-gray-700 shadow focus:outline-none
+    @apply  w-full appearance-none rounded border px-3 py-2  h-[200px] leading-tight text-gray-700 shadow focus:outline-none
 }

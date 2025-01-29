@@ -1,5 +1,6 @@
 import EventSection from "../components/AdminComponents/EventSection";
 import ExecutivesSection from "../components/AdminComponents/ExecutivesSection";
+import HallOfFame from "../components/AdminComponents/HallOfFame";
 import { useUser } from "../context/User";
 
 const Admin = () => {
@@ -34,7 +35,7 @@ const Admin = () => {
           </div>
         </nav>
         <section className="mt-6 rounded-lg bg-white p-6 shadow-md">
-          <EventSection />
+          <HallOfFame />
         </section>
       </main>
     </div>

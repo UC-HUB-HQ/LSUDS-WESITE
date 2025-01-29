@@ -254,7 +254,7 @@ const EventSection = () => {
                 >
                   <td className="tableItem">{index + 1}</td>
                   <td className="tableItem">{event.title}</td>
-                  <td className="tableItem">
+                  <td className="tableItem text-nowrap">
                     {textReducer(event.description, 10)}
                   </td>
                   <td className="tableItem text-center">
